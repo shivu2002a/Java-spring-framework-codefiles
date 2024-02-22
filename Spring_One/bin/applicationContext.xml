@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Load the properties file -->
+    <context:property-placeholder location = "classpath:sport.properties"/>
+
+	
+    <!-- Define your beans here -->
+    <!-- 
+    <bean id = "baseballCoach" 
+    	  class = "com.shivu.springOne.BaseballCoach">
+    </bean>
+
+    <bean id = "trackCoach" 
+    	  class = "com.shivu.springOne.TennisCoach">
+    </bean> 
+    -->
+    
+    <!-- Define Dependency-->
+    <bean id = "myFortuneService" 
+    	  class = "com.shivu.springOne.HappyFortuneService"></bean>
+    
+    <!--  Dependency Injection -->
+    <bean id = "baseballCoach" class = "com.shivu.springOne.BaseballCoach">
+    	<constructor-arg ref = "myFortuneService"/>
+    	
+    </bean>
+    
+    <bean id="trackCoach" class = "com.shivu.springOne.TrackCoach">
+    	<constructor-arg ref = "myFortuneService"/>
+    </bean>
+    
+    <bean id = "myCricketCoach" class = "com.shivu.springOne.CricketCoach">
+    	
+    	<!--  Inject setter -->
+    	<property name = "fortuneService" ref = "myFortuneService" />
+    	
+    	
+    	<!-- 
+    	  
+    	Inject literal Values in hard coded way
+    	<property name="emailAddress" value = "someone@xyz.com"/>
+    	<property name = "team" value = "Royal Challengers Bangalore" />
+    	
+    	-->
+    	
+    	<!--  Reading properties from another file and injecting them in code -->
+    	<property name = "emailAddress" value = "${emailValue}" />
+    	<property name = "team" value = "${teamValue}"/>
+    </bean>
+
+</beans>
+
+
+
+
+
